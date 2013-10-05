@@ -1,0 +1,6 @@
+<h2>Conditions</h2>
+<div class="fields">
+  <%= fields_for "conditions", AllTypesObject.new do |f| %>
+    <%= render 'shared/fields', :f => f, :for_conditions => true %>
+  <% end %>
+</div>

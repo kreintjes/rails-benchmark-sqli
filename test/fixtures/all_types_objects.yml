@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  binary_col: 
+  boolean_col: false
+  date_col: 2013-05-15
+  datetime_col: 2013-05-15 12:54:02
+  decimal_col: 9.99
+  float_col: 1.5
+  integer_col: 1
+  string_col: MyString
+  text_col: MyText
+  time_col: 2013-05-15 12:54:02
+  timestamp_col: 2013-05-15 12:54:02
+
+two:
+  binary_col: 
+  boolean_col: false
+  date_col: 2013-05-15
+  datetime_col: 2013-05-15 12:54:02
+  decimal_col: 9.99
+  float_col: 1.5
+  integer_col: 1
+  string_col: MyString
+  text_col: MyText
+  time_col: 2013-05-15 12:54:02
+  timestamp_col: 2013-05-15 12:54:02

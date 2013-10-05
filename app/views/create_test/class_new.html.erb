@@ -1,0 +1,8 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:method].humanize %></h1>
+
+<%= form_tag(create_test_class_create_path(encode_method(params[:method]), params[:amount])) do %>
+  <%= render "shared/attributes" %>
+  <div class="actions">
+    <%= submit_tag "Submit" %>
+  </div>
+<% end %>

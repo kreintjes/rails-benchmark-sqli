@@ -1,0 +1,14 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:method].humanize %></h1>
+
+<%= form_tag(create_test_relation_create_path(encode_method(params[:method]), params[:amount])) do %>
+  <%= render "shared/attributes" %>
+  <h2>Create_with</h2>
+  <div>
+    <%= fields_for "create_with", AllTypesObject.new do |f| %>
+      <%= render 'shared/fields', :f => f %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Submit" %>
+  </div>
+<% end %>

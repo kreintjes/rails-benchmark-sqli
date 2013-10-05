@@ -1,0 +1,8 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:apply_method].humanize %> - <%= params[:argument_type].humanize %> - <%= params[:argument_type_option].try(:humanize) %></h1>
+
+<%= form_tag(read_test_relation_condition_option_perform_path(encode_method(params[:apply_method]), params[:argument_type], params[:argument_type_option])) do %>
+  <%= render 'shared/conditions' %>
+  <div class="actions">
+    <%= submit_tag("Read All types objects") %>
+  </div>
+<% end %>

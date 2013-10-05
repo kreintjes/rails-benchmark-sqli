@@ -1,0 +1,16 @@
+<% HomeController::CONDITIONS_APPLY_METHODS.each do |apply_method| %>
+  <% HomeController::CONDITIONS_ARGUMENT_TYPES.each do |argument_type| %>
+    <% if argument_type == "list" || argument_type == "array" %>
+      <% argument_type_options = HomeController::CONDITIONS_PLACEHOLDER_STYLES %>
+    <% elsif argument_type == "hash" %>
+      <% argument_type_options = HomeController::CONDITIONS_HASH_STYLES %>
+    <% end %>
+    <% if argument_type_options.present? %>
+      <% argument_type_options.each do |argument_type_option| %>
+        <li><%= link_to "#{apply_method.humanize} #{argument_type.humanize} #{argument_type_option.humanize}", read_test_relation_condition_option_form_path(apply_method, argument_type, argument_type_option) %></li>
+      <% end %>
+    <% else %>
+        <li><%= link_to "#{apply_method.humanize} #{argument_type.humanize}", read_test_relation_condition_option_form_path(apply_method, argument_type) %></li>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,57 @@
+<h2>Finder options</h2>
+<h3>Simple options</h3>
+<h4 class="toggleable-link"><%= label_tag(:limit) %></h4>
+<div class="field toggleable closed">
+  <%= text_field_tag(:limit) %>
+</div>
+
+<h4 class="toggleable-link"><%= label_tag(:offset) %></h4>
+<div class="field toggleable closed">
+  <%= text_field_tag(:offset) %>
+</div>
+
+<h4 class="toggleable-link"><label>uniq</label></h4>
+<div class="field toggleable closed">
+  <%= check_box_tag(:uniq) %>
+</div>
+
+<h3>Conditions</h3>
+<h4 class="toggleable-link">Where</h4>
+<div class="fields toggleable closed">
+  <%= fields_for "where", AllTypesObject.new do |f| %>
+    <%= render 'shared/fields', :f => f, :for_conditions => true %>
+  <% end %>
+</div>
+
+<h4 class="toggleable-link">Having</h4>
+<div class="fields toggleable closed">
+  <%= fields_for "having", AllTypesObject.new do |f| %>
+    <%= render 'shared/fields', :f => f, :for_conditions => true %>
+  <% end %>
+</div>
+
+<h3>Associations</h3>
+<h4 class="toggleable-link"><%= label_tag(:eager_load) %></h4>
+<div class="field toggleable closed">
+  <%= select_tag(:eager_load, options_for_select(ReadTestController::ASSOCIATIONS), :multiple => true) %>
+</div>
+<h4 class="toggleable-link"><%= label_tag(:includes) %></h4>
+<div class="field toggleable closed">
+  <%= select_tag(:includes, options_for_select(ReadTestController::ASSOCIATIONS), :multiple => true) %>
+</div>
+<h4 class="toggleable-link"><%= label_tag(:joins) %></h4>
+<div class="field toggleable closed">
+  <%= select_tag(:joins, options_for_select(ReadTestController::ASSOCIATIONS), :multiple => true) %>
+</div>
+<h4 class="toggleable-link"><%= label_tag(:preload) %></h4>
+<div class="field toggleable closed">
+  <%= select_tag(:preload, options_for_select(ReadTestController::ASSOCIATIONS), :multiple => true) %>
+</div>
+
+<h3>Others</h3>
+<h4 class="toggleable-link">Create_with</h4>
+<div class="fields toggleable closed">
+  <%= fields_for "create_with", AllTypesObject.new do |f| %>
+    <%= render 'shared/fields', :f => f %>
+  <% end %>
+</div>

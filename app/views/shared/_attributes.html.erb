@@ -1,0 +1,13 @@
+<h2>Attributes</h2>
+<% if @all_types_object.respond_to?(:each_with_index) %>
+  <% @all_types_object.each_with_index do |all_types_object, i| %>
+    <h3>Object <%= (i + 1) %></h3>
+    <%= fields_for "attributes[]", all_types_object do |f| %>
+      <%= render 'shared/fields', :f => f %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= fields_for "attributes", @all_types_object do |f| %>
+    <%= render 'shared/fields', :f => f %>
+  <% end %>
+<% end %>

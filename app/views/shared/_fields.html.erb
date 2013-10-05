@@ -1,0 +1,54 @@
+<% if defined?(for_conditions) && for_conditions %>
+<div class="field">
+  <%= f.label :id %><br />
+  <%= f.text_field :id %>
+</div>
+<% end %>
+<div class="field">
+  <%= f.label :binary_col %><br />
+  <%= f.text_field :binary_col %>
+</div>
+<div class="field">
+  <%= f.label :boolean_col %><br />
+  <%= f.text_field :boolean_col %>
+</div>
+<div class="field">
+  <%= f.label :date_col %><br />
+  <%= f.text_field :date_col %>
+</div>
+<div class="field">
+  <%= f.label :datetime_col %><br />
+  <%= f.text_field :datetime_col %>
+</div>
+<div class="field">
+  <%= f.label :decimal_col %><br />
+  <%= f.text_field :decimal_col %>
+</div>
+<div class="field">
+  <%= f.label :float_col %><br />
+  <%= f.text_field :float_col %>
+</div>
+<div class="field">
+  <%= f.label :integer_col %><br />
+  <%= f.text_field :integer_col %>
+</div>
+<div class="field">
+  <%= f.label :string_col %><br />
+  <%= f.text_field :string_col %>
+</div>
+<div class="field">
+  <%= f.label :text_col %><br />
+  <%= f.text_field :text_col %>
+</div>
+<div class="field">
+  <%= f.label :time_col %><br />
+  <%= f.text_field :time_col %>
+</div>
+<div class="field">
+  <%= f.label :timestamp_col %><br />
+  <%= f.text_field :timestamp_col %>
+</div>
+<div class="field">
+  <%= f.label :belongs_to_id %><br />
+  <%= f.collection_select :belongs_to_id, AssociationObject.all, :id, :id, :include_blank => true %>
+</div>

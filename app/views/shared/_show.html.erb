@@ -1,0 +1,82 @@
+<h1>Object <%= all_types_object.id %></h1>
+
+<p>
+  <b>Binary col:</b>
+  <%= all_types_object.binary_col %>
+</p>
+
+<p>
+  <b>Boolean col:</b>
+  <%= all_types_object.boolean_col %>
+</p>
+
+<p>
+  <b>Date col:</b>
+  <%= all_types_object.date_col %>
+</p>
+
+<p>
+  <b>Datetime col:</b>
+  <%= all_types_object.datetime_col %>
+</p>
+
+<p>
+  <b>Decimal col:</b>
+  <%= all_types_object.decimal_col %>
+</p>
+
+<p>
+  <b>Float col:</b>
+  <%= all_types_object.float_col %>
+</p>
+
+<p>
+  <b>Integer col:</b>
+  <%= all_types_object.integer_col %>
+</p>
+
+<p>
+  <b>String col:</b>
+  <%= all_types_object.string_col %>
+</p>
+
+<p>
+  <b>Text col:</b>
+  <%= all_types_object.text_col %>
+</p>
+
+<p>
+  <b>Time col:</b>
+  <%= all_types_object.time_col %>
+</p>
+
+<p>
+  <b>Timestamp col:</b>
+  <%= all_types_object.timestamp_col %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%= all_types_object.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%= all_types_object.updated_at %>
+</p>
+
+<p>
+  <b>Belongs to id:</b>
+  <%= all_types_object.belongs_to_id %>
+</p>
+
+<% if @includes.present? %>
+<% @includes.each do |inc| %>
+<% if all_types_object.respond_to?(inc) %>
+<p>
+  <b><%= inc %>:</b>
+  <%= all_types_object.send(inc).inspect %>
+</p>
+<% end %>
+<% end %>
+<% end %>

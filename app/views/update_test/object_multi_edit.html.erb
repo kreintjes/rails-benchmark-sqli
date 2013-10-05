@@ -1,0 +1,8 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:method].humanize %> - Object <%= @all_types_object.id %></h1>
+
+<%= form_tag(update_test_object_multi_update_path(@all_types_object, params[:method])) do %>
+  <%= render "shared/attributes" %>
+  <div class="actions">
+    <%= submit_tag("Submit") %>
+  </div>
+<% end %>

@@ -1,0 +1,5 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:method].humanize %></h1>
+
+<p><%= @result %></p>
+
+<%= link_to 'Back', read_test_relation_value_form_path(encode_method(params[:method]), params[:option]) %>

@@ -1,0 +1,11 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:method].humanize %></h1>
+
+<%= form_tag(injection_test_injection_perform_path(encode_method(params[:method]))) do %>
+  <div class="field">
+  <%= label_tag(:value) %><br />
+  <%= text_field_tag(:value) %>
+</div>
+  <div class="actions">
+    <%= submit_tag("Inject All types objects") %>
+  </div>
+<% end %>

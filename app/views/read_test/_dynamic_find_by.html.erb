@@ -1,0 +1,8 @@
+<div class="field">
+  <%= label_tag(:attribute) %><br />
+  <%= select_tag(:attribute, options_for_select(AllTypesObject.column_names)) %>
+</div>
+<div class="field">
+  <%= label_tag(:value) %><br />
+  <%= text_field_tag(:value) %>
+</div>

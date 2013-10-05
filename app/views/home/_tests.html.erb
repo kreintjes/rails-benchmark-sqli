@@ -1,0 +1,201 @@
+<h2>Tests</h2>
+<p>
+  Below you can find the several tests/framework functionality included in this module:
+<p>
+
+<% if ApplicationController::CREATE_TESTS_ENABLED %>
+<h3>Create tests enabled</h3>
+<ul>
+  <li>Class methods:
+    <ul>
+      <li><%= link_to 'Create', create_test_class_new_path('create') %></li>
+      <li><%= link_to 'Create!', create_test_class_new_path('create!') %></li>
+      <li>Create array: <%= link_to_amounts 'create_test_class_new_path', 'create_array' %></li>
+      <li>Create! array: <%= link_to_amounts 'create_test_class_new_path', 'create!_array' %></li>
+      <li><%= link_to 'Save', create_test_class_new_path('save') %></li>
+      <li><%= link_to 'Save!', create_test_class_new_path('save!') %></li>
+    </ul>
+  </li>
+  <li>Relation methods:
+    <ul>
+      <li><%= link_to 'Create', create_test_relation_new_path('create') %></li>
+      <li><%= link_to 'Create!', create_test_relation_new_path('create!') %></li>
+      <li>Create array: <%= link_to_amounts 'create_test_relation_new_path', 'create_array' %></li>
+      <li>Create! array: <%= link_to_amounts 'create_test_relation_new_path', 'create!_array' %></li>
+    </ul>
+  </li>
+</ul>
+<p>Disable by setting ApplicationController::CREATE_TESTS_ENABLED to false</p>
+<% else %>
+<h3>Create tests disabled</h3>
+<p>Enable by setting ApplicationController::CREATE_TESTS_ENABLED to true</p>
+<% end %>
+
+<% if ApplicationController::READ_TESTS_ENABLED %>
+<h3>Read tests enabled</h3>
+<ul>
+  <li>Object finder relation methods:
+    <ul>
+      <li><%= link_to 'To_a', read_test_relation_objects_form_path('to_a') %></li>
+      <li><%= link_to 'All', read_test_relation_objects_form_path('all') %> (deprecated)</li>
+      <li><%= link_to 'Select', read_test_relation_objects_form_path('select') %></li>
+      <li><%= link_to 'First', read_test_relation_objects_form_path('first') %></li>
+      <li><%= link_to 'First!', read_test_relation_objects_form_path('first!') %></li>
+      <li><%= link_to 'Last', read_test_relation_objects_form_path('last') %></li>
+      <li><%= link_to 'Last!', read_test_relation_objects_form_path('last!') %></li>
+      <li>Find:
+        <%= link_to 'sub method', read_test_relation_objects_form_path('find', 'sub_method') %> (deprecated)
+        <%= link_to 'single id', read_test_relation_objects_form_path('find', 'single_id') %>
+        <%= link_to 'id list', read_test_relation_objects_form_path('find', 'id_list') %>
+        <%= link_to 'id array', read_test_relation_objects_form_path('find', 'id_array') %>
+      </li>
+      <li><%= link_to 'Find_by_...', read_test_relation_objects_form_path('dynamic_find_by') %></li>
+      <li><%= link_to 'Find_by_...!', read_test_relation_objects_form_path('dynamic_find_by!') %></li>
+      <li><%= link_to 'Find_each', read_test_relation_objects_form_path('find_each') %></li>
+      <li><%= link_to 'Find_in_batches', read_test_relation_objects_form_path('find_in_batches') %></li>
+      <li><%= link_to 'First_or_initialize', read_test_relation_objects_form_path('first_or_initialize') %></li>
+      <li><%= link_to 'First_or_create', read_test_relation_objects_form_path('first_or_create') %></li>
+      <li><%= link_to 'First_or_create!', read_test_relation_objects_form_path('first_or_create!') %></li>
+    </ul>
+  </li>
+  <li>Value relation methods:
+    <ul>
+      <li><%= link_to 'Any?', read_test_relation_value_form_path('any-') %></li>
+      <li><%= link_to 'Empty?', read_test_relation_value_form_path('empty-') %></li>
+      <li><%= link_to 'Many?', read_test_relation_value_form_path('many-') %></li>
+      <li>Exists?:
+        <%= link_to 'no arguments', read_test_relation_value_form_path('exists-') %>
+        <%= link_to 'id', read_test_relation_value_form_path('exists-', 'id') %>
+        <%= link_to 'conditions array', read_test_relation_value_form_path('exists-', 'conditions_array') %>
+        <%= link_to 'conditions hash', read_test_relation_value_form_path('exists-', 'conditions_hash') %>
+      </li>
+      <li><%= link_to 'Size', read_test_relation_value_form_path('size') %></li>
+      <li><%= link_to 'Explain', read_test_relation_value_form_path('explain') %></li>
+    </ul>
+  </li>
+  <li>Count relation methods:
+    <ul>
+      <li><%= link_to 'Average', read_test_relation_value_form_path('average') %></li>
+      <li><%= link_to 'Count', read_test_relation_value_form_path('count') %></li>
+      <li><%= link_to 'Maximum', read_test_relation_value_form_path('maximum') %></li>
+      <li><%= link_to 'Minimum', read_test_relation_value_form_path('minimum') %></li>
+      <li><%= link_to 'Sum', read_test_relation_value_form_path('sum') %></li>
+      <li><%= link_to 'Calculate', read_test_relation_value_form_path('calculate') %></li>
+      <li><%= link_to 'Pluck', read_test_relation_value_form_path('pluck') %></li>
+    </ul>
+  </li>
+  <li>By SQL relation methods:
+    <ul>
+      <li>Find_by_sql:
+        <%= link_to 'string', read_test_relation_by_sql_form_path('find_by_sql', 'string') %>
+        <%= link_to 'array', read_test_relation_by_sql_form_path('find_by_sql', 'array') %>
+      </li>
+      <li>Count_by_sql:
+        <%= link_to 'string', read_test_relation_by_sql_form_path('count_by_sql', 'string') %>
+        <%= link_to 'array', read_test_relation_by_sql_form_path('count_by_sql', 'array') %>
+      </li>
+    </ul>
+  </li>
+  <li>Condition option tests:
+    <ul>
+      <%= render 'condition_option_tests' %>
+    </ul>
+  </li>
+</ul>
+<p>Disable by setting ApplicationController::READ_TESTS_ENABLED to false</p>
+<% else %>
+<h3>Read tests disabled</h3>
+<p>Enable by setting ApplicationController::READ_TESTS_ENABLED to true</p>
+<% end %>
+
+<% if ApplicationController::UPDATE_TESTS_ENABLED %>
+<h3>Update tests enabled</h3>
+<ul>
+  <li>Relation methods:
+    <ul>
+      <li>Update:
+        <%= link_to 'Single', update_test_relation_edit_path('update', 'single') %>
+        <%= link_to 'Multi', update_test_relation_edit_path('update', 'multi') %>
+      </li>
+      <li>Update all:
+        <%= link_to 'String', update_test_relation_edit_path('update_all', 'string') %>
+        <%= link_to 'Array', update_test_relation_edit_path('update_all', 'array') %>
+        <%= link_to 'Hash', update_test_relation_edit_path('update_all', 'hash') %>
+      </li>
+    </ul>
+  </li>
+  <li>Object single update:
+    <ul>
+      <li>Update attribute: <%= link_to_objects('update_test_object_single_edit_path', 'update_attribute') %></li>
+      <li>Update column: <%= link_to_objects('update_test_object_single_edit_path', 'update_column') %></li>
+      <li>Increment!: <%= link_to_objects('update_test_object_single_edit_path', 'increment!') %></li>
+      <li>Decrement!: <%= link_to_objects('update_test_object_single_edit_path', 'decrement!') %></li>
+      <li>Toggle!: <%= link_to_objects('update_test_object_single_edit_path', 'toggle!') %></li>
+      <li>Touch: <%= link_to_objects('update_test_object_single_edit_path', 'touch') %></li>
+      <li>Save: <%= link_to_objects('update_test_object_single_edit_path', 'save') %></li>
+      <li>Save!: <%= link_to_objects('update_test_object_single_edit_path', 'save!') %></li>
+    </ul>
+  </li>
+  <li>Object multiple updates:
+    <ul>
+      <li>Update attributes: <%= link_to_objects('update_test_object_multi_edit_path', 'update_attributes') %></li>
+      <li>Update attributes!: <%= link_to_objects('update_test_object_multi_edit_path', 'update_attributes!') %></li>
+      <li>Save: <%= link_to_objects('update_test_object_multi_edit_path', 'save') %></li>
+      <li>Save!: <%= link_to_objects('update_test_object_multi_edit_path', 'save!') %></li>
+    </ul>
+  </li>
+</ul>
+<p>Disable by setting ApplicationController::UPDATE_TESTS_ENABLED to false</p>
+<% else %>
+<h3>Update tests disabled</h3>
+<p>Enable by setting ApplicationController::UPDATE_TESTS_ENABLED to true</p>
+<% end %>
+
+<% if ApplicationController::DELETE_TESTS_ENABLED %>
+<h3>Delete tests enabled</h3>
+<ul>
+  <li>Relation methods:
+    <ul>
+      <li>Delete:
+        <%= link_to 'Single', delete_test_relation_form_path('delete', 'single') %>
+        <%= link_to 'Multi', delete_test_relation_form_path('delete', 'multi') %>
+      </li>
+      <li>Destroy:
+        <%= link_to 'Single', delete_test_relation_form_path('destroy', 'single') %>
+        <%= link_to 'Multi', delete_test_relation_form_path('destroy', 'multi') %>
+      </li>
+      <li>Delete all:
+        <%= link_to 'String', delete_test_relation_form_path('delete_all', 'string') %>
+        <%= link_to 'Array', delete_test_relation_form_path('delete_all', 'array') %>
+        <%= link_to 'Hash', delete_test_relation_form_path('delete_all', 'hash') %>
+      </li>
+      <li>Destroy all:
+        <%= link_to 'String', delete_test_relation_form_path('destroy_all', 'string') %>
+        <%= link_to 'Array', delete_test_relation_form_path('destroy_all', 'array') %>
+        <%= link_to 'Hash', delete_test_relation_form_path('destroy_all', 'hash') %>
+      </li>
+    </ul>
+  </li>
+  <li>Object remove:
+    <ul>
+      <li>Delete: <%= link_to_objects('delete_test_object_remove_path', 'delete') %></li>
+      <li>Destroy: <%= link_to_objects('delete_test_object_remove_path', 'destroy') %></li>
+    </ul>
+  </li>
+</ul>
+<p>Disable by setting ApplicationController::DELETE_TESTS_ENABLED to false</p>
+<% else %>
+<h3>Delete tests disabled</h3>
+<p>Enable by setting ApplicationController::DELETE_TESTS_ENABLED to true</p>
+<% end %>
+
+<% if ApplicationController::INJECTION_TESTS_ENABLED %>
+<h3>Injection tests enabled</h3>
+<ul>
+  <li><%= link_to 'Order', injection_test_injection_form_path('order') %></li>
+</ul>
+<p>Disable by setting ApplicationController::INJECTION_TESTS_ENABLED to false</p>
+<% else %>
+<h3>Injection tests disabled</h3>
+<p>Enable by setting ApplicationController::INJECTION_TESTS_ENABLED to true</p>
+<% end %>

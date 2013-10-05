@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sqli</title>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% unless running? %>
+  <p id="alert"><%= alert %></p>
+  <p id="notice"><%= notice %></p>
+  <% end %>
+
+  <% if !running? && @show_last_queries && ActiveRecord::Base.connection.last_queries.present? %>
+  <p><strong><underline>Last queries:</underline></strong><br />
+    <% ActiveRecord::Base.connection.last_queries.each_with_index do |last_query, i| %>
+    <div><%= i + 1 %>. <%= last_query[1].present? ? "<strong>#{last_query[1]} </strong>".html_safe : nil %><%= last_query[0] %></div>
+    <% end %>
+  </p>
+  <% end %>
+
+  <%= yield %>
+
+  <%= link_to 'Root', root_path %>
+</body>
+</html>

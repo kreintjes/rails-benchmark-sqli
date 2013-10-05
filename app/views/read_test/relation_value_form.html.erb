@@ -1,0 +1,9 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:method].humanize %></h1>
+
+<%= form_tag(read_test_relation_value_perform_path(encode_method(params[:method]), params[:option])) do %>
+  <%= render @partial if @partial.present? %>
+  <%= render 'shared/query_methods_fields' %>
+  <div class="actions">
+    <%= submit_tag("Determine value") %>
+  </div>
+<% end %>

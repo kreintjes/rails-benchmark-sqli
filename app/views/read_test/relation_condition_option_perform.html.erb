@@ -1,0 +1,5 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:apply_method].humanize %> - <%= params[:argument_type].humanize %> - <%= params[:argument_type_option].try(:humanize) %></h1>
+
+<%= render 'shared/show_all', :all_types_objects => @all_types_objects %>
+
+<%= link_to 'Back', read_test_relation_condition_option_form_path(encode_method(params[:apply_method]), params[:argument_type], params[:argument_type_option]) %>

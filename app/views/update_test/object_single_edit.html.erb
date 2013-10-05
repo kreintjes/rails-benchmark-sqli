@@ -1,0 +1,12 @@
+<h1><%= params[:controller].humanize %> - <%= params[:action].humanize %> - <%= params[:method].humanize %> - Object <%= @all_types_object.id %></h1>
+
+<%= form_tag(update_test_object_single_update_path(@all_types_object, params[:method])) do %>
+  <div class="field">
+    <%= label_tag(:attribute) %><br />
+    <%= select_tag(:attribute, options_for_select(@all_types_object.attribute_names.reject { |a| a == "id" })) %>
+  </div>
+  <%= render @partial if @partial %>
+  <div class="actions">
+    <%= submit_tag("Submit") %>
+  </div>
+<% end %>

@@ -1,0 +1,54 @@
+<h2>Condition options</h2>
+<% if running? %>
+  <p>
+    The condition options as currently set.<br />
+    Set ApplicationController::RUN_MODE to false to change them.
+  </p>
+  <div>Apply method: <strong><%= @condition_options[:apply_method] %></strong></div>
+  <div>Argument type: <strong><%= @condition_options[:argument_type] %></strong></div>
+  <div>Placeholder style: <strong><%= @condition_options[:placeholder_style] %></strong></div>
+  <div>Hash style: <strong><%= @condition_options[:hash_style] %></strong></div>
+<% else %>
+<%= form_tag(home_update_condition_options_path) do %>
+  <p>
+    The form below can be used to change the various condition options (apply_method, argument_type, placeholder_style, hash_style).<br />
+    Conditions (mostly applied using the where or having method) can be set in various ways.<br />
+    The options below control these ways.<br />
+    These settings are global. They will be used for all methods using conditions (where or having), except the condition option tests, which explicitely overwrite these options.<br />
+    <div style="font-weight: bold; text-decoration: underline;">Note: make sure to disable the condition options form before running the tests. Do this by setting ApplicationController::RUN_MODE to true.</div>
+  </p>
+  <div class="field">
+    <%= label_tag('apply_method') %><br />
+    <%= select_tag('apply_method', options_for_select(HomeController::CONDITIONS_APPLY_METHODS, :selected => @condition_options[:apply_method])) %>
+     <div style="font-style: italic;">
+      The apply method (separated/joined) determines whether the conditions should be applied seperately (using multiple where/having method calls) or joined in a large statement (using a single where/having method call).
+    </div>
+  </div>
+  <div class="field">
+    <%= label_tag('argument_type') %><br />
+    <%= select_tag('argument_type', options_for_select(HomeController::CONDITIONS_ARGUMENT_TYPES, :selected => @condition_options[:argument_type])) %>
+    <div style="font-style: italic;">
+      The argument type (string/list/array/hash) determines whether the arguments should be applied as a string (one large statement string with values filled in), a list (statement string followed by a list with bind variables), an array (with a statement string and bind variables) or an hash.
+    </div>
+  </div>
+  <div class="field">
+    <%= label_tag('placeholder_style') %><br />
+    <%= select_tag('placeholder_style', options_for_select(HomeController::CONDITIONS_PLACEHOLDER_STYLES, :selected => @condition_options[:placeholder_style])) %>
+    <div style="font-style: italic;">
+      The placeholder style (question_mark/named/sprintf) determines whether we want to use question mark (?) placeholders, named placeholders (:id) or sprintf type placeholders (%s).<br />
+      This only has effect when the argument type is list or array.
+    </div>
+  </div>
+  <div class="field">
+    <%= label_tag('hash_style') %><br />
+    <%= select_tag('hash_style', options_for_select(HomeController::CONDITIONS_HASH_STYLES, :selected => @condition_options[:hash_style])) %>
+    <div style="font-style: italic;">
+      The hash style (equality/range/subset) determines whether we want to create an equality condition, range condition (BETWEEN) or subset condition (IN).<br />
+      This only has effect when the argument type is hash.
+    </div>
+  </div>
+  <div class="actions">
+    <%= submit_tag 'Submit' %>
+  </div>
+<% end %>
+<% end %>
