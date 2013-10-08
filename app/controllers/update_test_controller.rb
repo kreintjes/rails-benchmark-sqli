@@ -72,6 +72,17 @@ class UpdateTestController < ApplicationController
       # Render the value field.
       @partial = "value"
     end
+    @attributes = @all_types_object.attribute_names.reject { |a| a == "id" }
+    case params[:method]
+    when "increment!"
+      @attributes = @attributes.reject { |a| !@all_types_object.send(a).respond_to?(:+) }
+    when "decrement!"
+      @attributes = @attributes.reject { |a| !@all_types_object.send(a).respond_to?(:-) }
+    when "toggle!"
+      @attributes = @attributes.reject { |a| ["binary_col", "float_col", "created_at", "updated_at"].include?(a) }
+    when "touch"
+      @attributes = @attributes.reject { |a| ["binary_col", "integer_col", "belongs_to_id"].include?(a) }
+    end
   end
 
   # We want to update a single attribute of the object through its instance methods.
@@ -85,15 +96,15 @@ class UpdateTestController < ApplicationController
     case params[:method]
     when "increment!", "decrement!"
       # Increment the object's attribute :attribute by :by with Rails increment! method.
-      begin
-        # First try it with the raw data (which will be a string).
-        @all_types_object.send("#{params[:method]}", params[:attribute], params[:by])
-      rescue TypeError=>e
-        # This likely fails, since increment/decrement expects by to be an integer or nil. Try again with a typecast.
-        if(params[:by].present?)
+      if params[:by].blank?
+        @all_types_object.send("#{params[:method]}", params[:attribute])
+      else
+        begin
+          # First try it with the raw data (which will be a string).
+          @all_types_object.send("#{params[:method]}", params[:attribute], params[:by])
+        rescue TypeError, NoMethodError=>e
+          # This likely fails, since increment/decrement expects by to be an integer or nil. Try again with a typecast.
           @all_types_object.send("#{params[:method]}", params[:attribute], params[:by].to_i)
-        else
-          @all_types_object.send("#{params[:method]}", params[:attribute])
         end
       end
     when "toggle!"
