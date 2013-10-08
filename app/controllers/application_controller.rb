@@ -103,9 +103,11 @@ class ApplicationController < ActionController::Base
     errors = [
       { :type => PG::UniqueViolation, :messages => ["ERROR:  duplicate key value violates unique constraint"] },
       { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for type"] },
+      { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for integer"] },
       { :type => PG::InvalidDatetimeFormat, :messages => ["ERROR:  invalid input syntax for type"] },
       { :type => PG::DatetimeFieldOverflow, :messages => ["ERROR:  date/time field value out of range"] },
       { :type => PG::SyntaxError, :messages => ["ERROR:  syntax error at or near \"DISTINCT\"", "DISTINCT DISTINCT"] },
+      { :type => PG::AmbiguousColumn, :messages => ["ERROR:  column reference \"id\" is ambiguous"] },
       { :type => ActiveRecord::RecordNotFound, :messages => [] },
       { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] },
       { :type => ArgumentError, :messages => ["argument out of range"] },
