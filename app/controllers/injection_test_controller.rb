@@ -12,6 +12,8 @@ class InjectionTestController < ApplicationController
     case params[:method]
     when "order"
       @all_types_objects = AllTypesObject.order(params[:value]).to_a
+    when "where"
+      @all_types_objects = AllTypesObject.where("string_col = '#{params[:value]}'").to_a
     else
       raise "Unknown method '#{params[:method]}'"
     end
