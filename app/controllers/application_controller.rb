@@ -11,11 +11,11 @@ class ApplicationController < ActionController::Base
   CONDITION_OPTIONS_FILE = 'public/condition_options.set'
   RUN_MODE = nil # Let the system decide based on the environment
 
-  CREATE_TESTS_ENABLED = false
+  CREATE_TESTS_ENABLED = true
   READ_TESTS_ENABLED = false
   UPDATE_TESTS_ENABLED = false
   DELETE_TESTS_ENABLED = false
-  INJECTION_TESTS_ENABLED = true
+  INJECTION_TESTS_ENABLED = false
 
   def running?
     return RUN_MODE if RUN_MODE.present?
@@ -104,6 +104,7 @@ class ApplicationController < ActionController::Base
       { :type => PG::SyntaxError, :messages => ["ERROR:  syntax error at or near \"DISTINCT\"", "DISTINCT DISTINCT"] },
       { :type => ActiveRecord::RecordNotFound, :messages => [] },
       { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] },
+      { :type => ArgumentError, :messages => ["argument out of range"] },
     ]
     errors.each do |error|
       if exception.is_a?(error[:type])

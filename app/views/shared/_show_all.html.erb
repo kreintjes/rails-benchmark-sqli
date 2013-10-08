@@ -1,5 +1,5 @@
-<% if @all_types_objects.present? %>
-  <% @all_types_objects.each do |all_types_object| %>
-    <%= render 'shared/show', :all_types_object => all_types_object %>
+<% if all_types_objects.present? %>
+  <% all_types_objects.each do |all_types_object| %>
+    <%= render 'shared/show', :all_types_object => all_types_object if all_types_object.present? %>
   <% end %>
 <% end %>
