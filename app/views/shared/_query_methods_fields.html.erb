@@ -1,9 +1,11 @@
 <h2>Finder options</h2>
 <h3>Simple options</h3>
+<% unless @disable_query_method_limit %>
 <h4 class="toggleable-link"><%= label_tag(:limit) %></h4>
 <div class="field toggleable closed">
   <%= text_field_tag(:limit) %>
 </div>
+<% end %>
 
 <h4 class="toggleable-link"><%= label_tag(:offset) %></h4>
 <div class="field toggleable closed">

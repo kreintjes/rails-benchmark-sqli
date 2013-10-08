@@ -10,6 +10,9 @@ class DeleteTestController < ApplicationController
     when "delete_all", "destroy_all"
       @partial = "shared/conditions"
     end
+    if ["delete", "delete_all"].include?(params[:method])
+      @disable_query_method_limit = true # Disable limit, since it is not supported by delete/delete_all, and raises exceptions if set.
+    end
   end
 
   # We want to delete an object/multiple objects through a relation method.
@@ -71,6 +74,6 @@ class DeleteTestController < ApplicationController
       method = params[:method] == 'delete' ? 'Deleting' : 'Destroying'
       @result = "#{method} object #{params[:id]} failed... :("
     end
-    render 'object_result'
+    respond_with(@result)
   end
 end

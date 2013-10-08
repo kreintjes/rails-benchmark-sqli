@@ -109,6 +109,7 @@ class ApplicationController < ActionController::Base
       { :type => ActiveRecord::RecordNotFound, :messages => [] },
       { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] },
       { :type => ArgumentError, :messages => ["argument out of range"] },
+      { :type => ArgumentError, :messages => ["invalid value for Integer()"] },
     ]
     errors.each do |error|
       if exception.is_a?(error[:type])
