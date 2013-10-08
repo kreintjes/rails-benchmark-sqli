@@ -8,14 +8,9 @@ class ApplicationController < ActionController::Base
   before_filter :reset_query_log # Clear last queries.
   before_filter :parse_method
 
+  BENCHMARK_MODULES = ['create', 'read', 'update', 'delete', 'injection']
   CONDITION_OPTIONS_FILE = 'public/condition_options.set'
   RUN_MODE = nil # Let the system decide based on the environment
-
-  CREATE_TESTS_ENABLED = true
-  READ_TESTS_ENABLED = false
-  UPDATE_TESTS_ENABLED = false
-  DELETE_TESTS_ENABLED = false
-  INJECTION_TESTS_ENABLED = false
 
   def running?
     return RUN_MODE if RUN_MODE.present?
@@ -38,6 +33,15 @@ class ApplicationController < ActionController::Base
     ActiveRecord::Base.connection.execute('TRUNCATE TABLE "association_objects" RESTART IDENTITY')
     Rails.application.load_seed
   end
+
+  def active_modules
+    if ENV['BENCHMARK_MODULES'].present?
+      ENV['BENCHMARK_MODULES'].split(',')
+    else
+      BENCHMARK_MODULES
+    end
+  end
+  helper_method :active_modules
 
   # The apply method (separated/joined) determines whether the conditions should be applied seperately (using multiple where/having method calls) or joined in a large statement (using a single where/having method call).
   # The argument type (string/list/array/hash) determines whether the arguments should be applied as a string (one large statement string with values filled in), a list (statement string followed by a list with bind variables), an array (with a statement string and bind variables) or an hash.

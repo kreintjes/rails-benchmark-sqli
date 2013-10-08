@@ -3,7 +3,7 @@
   Below you can find the several tests/framework functionality included in this module:
 <p>
 
-<% if ApplicationController::CREATE_TESTS_ENABLED %>
+<% if active_modules.include?('create') %>
 <h3>Create tests enabled</h3>
 <ul>
   <li>Class methods:
@@ -25,13 +25,13 @@
     </ul>
   </li>
 </ul>
-<p>Disable by setting ApplicationController::CREATE_TESTS_ENABLED to false</p>
+<p>Disable by removing 'create' from BENCHMARK_MODULES</p>
 <% else %>
 <h3>Create tests disabled</h3>
-<p>Enable by setting ApplicationController::CREATE_TESTS_ENABLED to true</p>
+<p>Enable by adding 'create' to BENCHMARK_MODULES</p>
 <% end %>
 
-<% if ApplicationController::READ_TESTS_ENABLED %>
+<% if active_modules.include?('read') %>
 <h3>Read tests enabled</h3>
 <ul>
   <li>Object finder relation methods:
@@ -102,13 +102,13 @@
     </ul>
   </li>
 </ul>
-<p>Disable by setting ApplicationController::READ_TESTS_ENABLED to false</p>
+<p>Disable by removing 'read' from BENCHMARK_MODULES</p>
 <% else %>
 <h3>Read tests disabled</h3>
-<p>Enable by setting ApplicationController::READ_TESTS_ENABLED to true</p>
+<p>Enable by adding 'read' to BENCHMARK_MODULES</p>
 <% end %>
 
-<% if ApplicationController::UPDATE_TESTS_ENABLED %>
+<% if active_modules.include?('update') %>
 <h3>Update tests enabled</h3>
 <ul>
   <li>Relation methods:
@@ -145,13 +145,13 @@
     </ul>
   </li>
 </ul>
-<p>Disable by setting ApplicationController::UPDATE_TESTS_ENABLED to false</p>
+<p>Disable by removing 'update' from BENCHMARK_MODULES</p>
 <% else %>
 <h3>Update tests disabled</h3>
-<p>Enable by setting ApplicationController::UPDATE_TESTS_ENABLED to true</p>
+<p>Enable by adding 'update' to BENCHMARK_MODULES</p>
 <% end %>
 
-<% if ApplicationController::DELETE_TESTS_ENABLED %>
+<% if active_modules.include?('delete') %>
 <h3>Delete tests enabled</h3>
 <ul>
   <li>Relation methods:
@@ -183,20 +183,20 @@
     </ul>
   </li>
 </ul>
-<p>Disable by setting ApplicationController::DELETE_TESTS_ENABLED to false</p>
+<p>Disable by removing 'delete' from BENCHMARK_MODULES</p>
 <% else %>
 <h3>Delete tests disabled</h3>
-<p>Enable by setting ApplicationController::DELETE_TESTS_ENABLED to true</p>
+<p>Enable by adding 'delete' to BENCHMARK_MODULES</p>
 <% end %>
 
-<% if ApplicationController::INJECTION_TESTS_ENABLED %>
+<% if active_modules.include?('injection') %>
 <h3>Injection tests enabled</h3>
 <ul>
   <li><%= link_to 'Order', injection_test_injection_form_path('order') %></li>
   <li><%= link_to 'Where', injection_test_injection_form_path('where') %></li>
 </ul>
-<p>Disable by setting ApplicationController::INJECTION_TESTS_ENABLED to false</p>
+<p>Disable by removing 'injection' from BENCHMARK_MODULES</p>
 <% else %>
 <h3>Injection tests disabled</h3>
-<p>Enable by setting ApplicationController::INJECTION_TESTS_ENABLED to true</p>
+<p>Enable by adding 'injection' to BENCHMARK_MODULES</p>
 <% end %>
