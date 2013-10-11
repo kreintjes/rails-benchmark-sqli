@@ -36,4 +36,7 @@ Sqli::Application.routes.draw do
   # Injection tests
   match "injection_test/injection_form/:method", :controller => 'injection_test', :action => 'injection_form', :via => 'get', :as => 'injection_test_injection_form'
   match "injection_test/injection_perform/:method", :controller => 'injection_test', :action => 'injection_perform', :via => 'post', :as => 'injection_test_injection_perform'
+
+  # Catch all to disable logging of routing errors
+  match '*path', :via => [:get, :post], :controller => 'application', :action => 'show_404'
 end

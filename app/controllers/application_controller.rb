@@ -130,6 +130,11 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  # Show 404
+  def show_404
+    render :file => 'public/404.html', :status => :not_found, :layout => false
+  end
+
   # Extract query methods (finder options) from params and apply them to the relation.
   def apply_query_methods(relation, params, only = nil)
     # Simple options
