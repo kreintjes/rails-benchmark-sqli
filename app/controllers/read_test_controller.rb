@@ -41,8 +41,11 @@ class ReadTestController < ApplicationController
     when "find"
       case params[:option]
       when "sub_method"
-        raise "Unknown sub method '#{params[:sub_method]}'" unless FIND_SUB_METHODS.include?(params[:sub_method])
-        @results = relation.send(params[:method], params[:sub_method].to_sym)
+        if FIND_SUB_METHODS.include?(params[:sub_method])
+          @results = relation.send(params[:method], params[:sub_method].to_sym)
+        else
+          flash[:alert] = "Unknown sub method selected" unless running?
+        end
       when "single_id"
         @results = relation.send(params[:method], params[:id])
       when "id_list"
@@ -51,6 +54,7 @@ class ReadTestController < ApplicationController
         @results = relation.send(params[:method], params[:id])
       end
     when "dynamic_find_by", "dynamic_find_by!"
+      return redirect_to read_test_relation_objects_form_path(params[:method], params[:option]), :alert => "Selected attribute is not a valid attribute of AllTypesObject!" unless AllTypesObject.attribute_names.include?(params[:attribute])
       method = "find_by_#{params[:attribute]}" + (params[:method] == "dynamic_find_by!" ? "!" : "")
       @results = relation.send(method, params[:value])
     when "find_each", "find_in_batches"
