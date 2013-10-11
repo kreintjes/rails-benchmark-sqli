@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  #protect_from_forgery # Disabled as a precaution (it could hinder the dynamic scanners)
+  #protect_from_forgery with: :exception # Disabled as a precaution (it could hinder the dynamic scanners)
   respond_to :html
 
   rescue_from StandardError, :with => :handle_exception # Safe rescue possible exceptions if needed (to prevent false positives)
@@ -88,7 +88,9 @@ class ApplicationController < ActionController::Base
   def handle_exception(exception)
     if safe_rescue_exception?(exception)
       # This exception should be safely rescued to prevent false positive for the dynamic scanners. Log the exception
-      logger.debug " Automatic handled " + exception.class.to_s + ": " + exception.message + " to prevent false positive"
+      message = " Automatic handled " + exception.class.to_s + ": " + exception.message + " to prevent false positive"
+      logger.debug message
+      flash[:alert] = message unless running?
       # Try to render the normal controller action (although with empty results) as if everything is well
       render
     else
