@@ -25,7 +25,7 @@ class ReadTestController < ApplicationController
   # We want to read multiple objects through a relation method.
   def relation_objects_perform
     # Build the relation depending on the various options (query methods).
-    relation = AllTypesObject.all
+    relation = AllTypesObject.scoped
     # Extract and apply query methods.
     relation = apply_query_methods(relation, params)
 
@@ -93,7 +93,7 @@ class ReadTestController < ApplicationController
   # We want to determine some value from a database table through a relation method.
   def relation_value_perform
     # Build the relation depending on the various options (query methods).
-    relation = AllTypesObject.all
+    relation = AllTypesObject.scoped
     # Extract and apply query methods
     relation = apply_query_methods(relation, params)
 
@@ -170,7 +170,7 @@ class ReadTestController < ApplicationController
   # We want to read through the relation all method, using the various available condition options.
   def relation_condition_option_perform
     # Build the relation depending on the various options (query methods).
-    relation = AllTypesObject.all
+    relation = AllTypesObject.scoped
 
     # Set the right condition options
     @condition_options = {

@@ -43,7 +43,7 @@ class CreateTestController < ApplicationController
   # We want to insert the new object(s) into the database through a relation method.
   def relation_create
     # Build the relation depending on the various options (query methods).
-    relation = AllTypesObject.all
+    relation = AllTypesObject.scoped
     # Extract and apply query methods (for the create tests only the create_with option is relevant)
     relation = apply_query_methods(relation, params, [:create_with])
 

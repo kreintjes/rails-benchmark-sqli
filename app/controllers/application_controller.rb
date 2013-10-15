@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  #protect_from_forgery with: :exception # Disabled as a precaution (it could hinder the dynamic scanners)
+  #protect_from_forgery # Disabled as a precaution (it could hinder the dynamic scanners)
   respond_to :html
 
   rescue_from StandardError, :with => :handle_exception # Safe rescue possible exceptions if needed (to prevent false positives)

@@ -18,7 +18,7 @@ class DeleteTestController < ApplicationController
   # We want to delete an object/multiple objects through a relation method.
   def relation_perform
     # Build the relation depending on the various options (query methods).
-    relation = AllTypesObject.all
+    relation = AllTypesObject.scoped
     # Extract and apply query methods
     relation = apply_query_methods(relation, params)
 

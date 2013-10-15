@@ -1,4 +1,4 @@
 rails-benchmark-sqli
 ====================
 
-Benchmark application to test Rails 4.0 for SQL injections
+Benchmark application to test Rails 3.2 for SQL injections

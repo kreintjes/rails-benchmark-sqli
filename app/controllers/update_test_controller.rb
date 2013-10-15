@@ -14,7 +14,7 @@ class UpdateTestController < ApplicationController
   # We want to update multiple attributes of an object/multiple objects through a relation method.
   def relation_update
     # Build the relation depending on the various options (query methods).
-    relation = AllTypesObject.all
+    relation = AllTypesObject.scoped
     # Extract and apply query methods
     relation = apply_query_methods(relation, params)
 
