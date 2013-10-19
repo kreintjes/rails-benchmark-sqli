@@ -75,7 +75,7 @@ class UpdateTestController < ApplicationController
     @attributes = @all_types_object.attribute_names.reject { |a| a == "id" }
     case params[:method]
     when "increment!"
-      @attributes = @attributes.reject { |a| !@all_types_object.send(a).respond_to?(:+) }
+      @attributes = @attributes.reject { |a| !@all_types_object.send(a).respond_to?(:+) || @all_types_object.send(a).is_a?(String) }
     when "decrement!"
       @attributes = @attributes.reject { |a| !@all_types_object.send(a).respond_to?(:-) }
     when "toggle!"
