@@ -103,13 +103,13 @@ class ApplicationController < ActionController::Base
   def safe_rescue_exception?(exception)
     # Exceptions to be safe rescued
     errors = [
-      { :type => PG::UniqueViolation, :messages => ["ERROR:  duplicate key value violates unique constraint"] },
-      { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for type"] },
-      { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for integer"] },
-      { :type => PG::InvalidDatetimeFormat, :messages => ["ERROR:  invalid input syntax for type"] },
-      { :type => PG::DatetimeFieldOverflow, :messages => ["ERROR:  date/time field value out of range"] },
-      { :type => PG::SyntaxError, :messages => ["ERROR:  syntax error at or near \"DISTINCT\"", "DISTINCT DISTINCT"] },
-      { :type => PG::AmbiguousColumn, :messages => ["ERROR:  column reference \"id\" is ambiguous"] },
+      { :type => ActiveRecord::StatementInvalid, :messages => ["PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint"] },
+      { :type => ActiveRecord::StatementInvalid, :messages => ["PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type"] },
+      { :type => ActiveRecord::StatementInvalid, :messages => ["PG::InvalidTextRepresentation: ERROR:  invalid input syntax for integer"] },
+      { :type => ActiveRecord::StatementInvalid, :messages => ["PG::InvalidDatetimeFormat: ERROR:  invalid input syntax for type"] },
+      { :type => ActiveRecord::StatementInvalid, :messages => ["PG::DatetimeFieldOverflow: ERROR:  date/time field value out of range"] },
+      { :type => ActiveRecord::StatementInvalid, :messages => ["G::SyntaxError: ERROR:  syntax error at or near \"DISTINCT\"", "DISTINCT DISTINCT"] },
+      { :type => ActiveRecord::StatementInvalid, :messages => ["PG::AmbiguousColumn: ERROR:  column reference \"id\" is ambiguous"] },
       { :type => ActiveRecord::RecordNotFound, :messages => [] },
       { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] },
       { :type => ArgumentError, :messages => ["argument out of range"] },
