@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
   def handle_exception(exception)
     if safe_rescue_exception?(exception)
       # This exception should be safely rescued to prevent false positive for the dynamic scanners. Log the exception
-      message = " Automatic handled " + exception.class.to_s + ": " + exception.message + " to prevent false positive"
+      message = "Automatic handled " + exception.class.to_s + ": " + exception.message + " to prevent false positive"
       logger.debug message
       flash[:alert] = message unless running?
       # Try to render the normal controller action (although with empty results) as if everything is well
