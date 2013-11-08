@@ -183,8 +183,8 @@ class ReadTestController < ApplicationController
     # Apply the conditions.
     relation = build_and_apply_conditions(relation, :where, params[:conditions])
 
-    # Perform the query using the all method (since this is one of the most general and common finder methods).
-    @all_types_objects = relation.all
+    # The query will be automatically performed (probably using to_a) in the view to display the results.
+    @all_types_objects = relation
 
     respond_with(@all_types_objects)
   end

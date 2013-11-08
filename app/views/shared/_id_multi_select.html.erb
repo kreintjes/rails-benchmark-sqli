@@ -1,4 +1,4 @@
 <div class="field">
   <%= label_tag(:id) %><br />
-  <%= select_tag(:id, options_for_select(AllTypesObject.order(:id).to_a.map(&:id)), :multiple => true) %>
+  <%= select_tag(:id, options_for_select(AllTypesObject.order(:id).map(&:id)), :multiple => true) %>
 </div>
