@@ -20,10 +20,9 @@ class UpdateTestController < ApplicationController
 
     case params[:method]
     when "update"
-      return redirect_to(update_test_relation_edit_path(encode_method(params[:method]), params[:option]), :alert => "Please enter one or more ids") if params[:id].blank?
       if params[:option] == "multi"
         # Convert the attributes to an array of attributes (one for each of the objects we want to edit).
-        params[:updates] = Array.new(params[:id].size) { params[:updates] }
+        params[:updates] = Array.new(params[:id].try(:size).to_i) { params[:updates] }
       end
       # Find and update the object(s) by its/their ID(s) through the relation update method.
       @all_types_objects = [relation.update(params[:id], params[:updates])].flatten
@@ -75,9 +74,9 @@ class UpdateTestController < ApplicationController
     @attributes = @all_types_object.attribute_names.reject { |a| a == "id" }
     case params[:method]
     when "increment!"
-      @attributes = @attributes.reject { |a| !@all_types_object.send(a).respond_to?(:+) }
+      @attributes = @attributes.reject { |a| ["boolean_col"].include?(a) }
     when "decrement!"
-      @attributes = @attributes.reject { |a| !@all_types_object.send(a).respond_to?(:-) }
+      @attributes = @attributes.reject { |a| ["binary_col", "boolean_col", "string_col", "text_col"].include?(a) }
     when "toggle!"
       @attributes = @attributes.reject { |a| ["binary_col", "float_col", "created_at", "updated_at"].include?(a) }
     when "touch"

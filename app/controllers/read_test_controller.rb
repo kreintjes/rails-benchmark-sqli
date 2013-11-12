@@ -54,6 +54,7 @@ class ReadTestController < ApplicationController
         @results = relation.send(params[:method], params[:id])
       end
     when "dynamic_find_by", "dynamic_find_by!"
+      # Check if the attribute name is allowed to prevent errors.
       return redirect_to read_test_relation_objects_form_path(params[:method], params[:option]), :alert => "Selected attribute is not a valid attribute of AllTypesObject!" unless AllTypesObject.attribute_names.include?(params[:attribute])
       method = "find_by_#{params[:attribute]}" + (params[:method] == "dynamic_find_by!" ? "!" : "")
       @results = relation.send(method, params[:value])
@@ -115,7 +116,6 @@ class ReadTestController < ApplicationController
     when "average", "count", "maximum", "minimum", "sum", "calculate", "pluck"
       # Check if the column_name is allowed (the column_name parameter for the method pluck is considered safe by Rails and thus this parameter should be checked against a whitelist)
       return redirect_to read_test_relation_value_form_path(params[:method], params[:option]), :alert => "Selected column_name is not a valid attribute of AllTypesObject!" unless AllTypesObject.attribute_names.include?(params[:column_name])
-
       options = [{ :distinct => (params[:distinct] == "true") }] if params[:distinct].present? # Only count and calculate take distinct (and actually only calculate with sub_method=count used distinct)
       sub_method = [params[:sub_method].to_sym] if params[:method] == "calculate" # Only calculate takes a sub_method. For other methods sub method is ignored and not used as an argument.
       @result = relation.send(params[:method], *sub_method, params[:column_name].presence, *options)

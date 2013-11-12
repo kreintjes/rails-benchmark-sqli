@@ -24,7 +24,6 @@ class DeleteTestController < ApplicationController
 
     case params[:method]
     when "delete", "destroy"
-      return redirect_to(delete_test_relation_form_path(encode_method(params[:method]), params[:option]), :alert => "Please enter one or more ids") if params[:method] == "destroy" && params[:id].blank?
       # Delete or find and destroy the object(s) by its/their ID(s) through the relation delete or destroy method.
       amount = relation.send(params[:method], params[:id])
       amount = [amount].flatten.size if params[:method] == "destroy"
