@@ -8,8 +8,13 @@ class ReadTestController < ApplicationController
   # We want a form to read multiple objects through a relation method.
   def relation_objects_form
     case params[:method]
-    when "first", "last"
+    when "first", "last", "take"
       @partial = "amount"
+    when "find_by", "find_by!"
+      @partial = "shared/conditions"
+    when "find_or_initialize_by", "find_or_create_by", "find_or_create_by!"
+      @all_types_object = AllTypesObject.new
+      @partial = "find_or_create_by"
     when "dynamic_find_by", "dynamic_find_by!"
       @partial = "dynamic_find_by"
     when "find_each", "find_in_batches"
@@ -31,10 +36,10 @@ class ReadTestController < ApplicationController
 
     # Perform the query
     case params[:method]
-    when "first", "last"
+    when "first", "last", "take"
       amount = params[:amount].to_i if params[:amount].present?
       @results = relation.send(params[:method], *amount)
-    when "to_a", "all", "first!", "last!"
+    when "to_a", "all", "load", "reload", "first!", "last!", "take!"
       @results = relation.send(params[:method])
     when "select"
       @results = relation.send(params[:method]) { true } # Select with a block acts as a finder method. The block simply returns true to not futher limit the results.
@@ -52,6 +57,17 @@ class ReadTestController < ApplicationController
         @results = relation.send(params[:method], *params[:id])
       when "id_array"
         @results = relation.send(params[:method], params[:id])
+      end
+    when "find_by", "find_by!"
+      conditions = build_conditions('joined', 'list', params[:conditions]).first || [nil]
+      @results = relation.send(params[:method], *conditions)
+    when "find_or_initialize_by", "find_or_create_by", "find_or_create_by!"
+      conditions = build_conditions('joined', 'hash', params[:conditions]).flatten.first || {}
+      attributes = params[:attributes].reject { |k,v| v.blank? }
+      if attributes.present?
+        @results = relation.send(params[:method], conditions) { |object| object.attributes = attributes }
+      else
+        @results = relation.send(params[:method], conditions)
       end
     when "dynamic_find_by", "dynamic_find_by!"
       # Check if the attribute name is allowed to prevent errors.
@@ -100,7 +116,7 @@ class ReadTestController < ApplicationController
 
     # Perform the query
     case params[:method]
-    when "any?", "empty?", "many?", "size", "explain"
+    when "any?", "blank?", "empty?", "many?", "size", "explain", "inspect"
       @result = relation.send(params[:method])
     when "exists?"
       case params[:option]
@@ -113,12 +129,13 @@ class ReadTestController < ApplicationController
       else
         @result = relation.send(params[:method])
       end
-    when "average", "count", "maximum", "minimum", "sum", "calculate", "pluck"
+    when "average", "count", "maximum", "minimum", "sum", "calculate", "pluck", "ids"
       # Check if the column_name is allowed (the column_name parameter for the method pluck is considered safe by Rails and thus this parameter should be checked against a whitelist)
-      return redirect_to read_test_relation_value_form_path(params[:method], params[:option]), :alert => "Selected column_name is not a valid attribute of AllTypesObject!" unless AllTypesObject.attribute_names.include?(params[:column_name])
-      options = [{ :distinct => (params[:distinct] == "true") }] if params[:distinct].present? # Only count and calculate take distinct (and actually only calculate with sub_method=count used distinct)
+      return redirect_to read_test_relation_value_form_path(params[:method], params[:option]), :alert => "Selected column_name is not a valid attribute of AllTypesObject!" if params[:colunn_name].present? && !AllTypesObject.attribute_names.include?(params[:column_name])
       sub_method = [params[:sub_method].to_sym] if params[:method] == "calculate" # Only calculate takes a sub_method. For other methods sub method is ignored and not used as an argument.
-      @result = relation.send(params[:method], *sub_method, params[:column_name].presence, *options)
+      column_name = [params[:column_name].presence] unless params[:method] == 'ids'
+      options = [{ :distinct => (params[:distinct] == "true") }] if params[:distinct].present? # Only count and calculate take distinct (and actually only calculate with sub_method=count used distinct)
+      @result = relation.send(params[:method], *sub_method, *column_name, *options)
     else
       raise "Unknown method '#{params[:method]}'"
     end

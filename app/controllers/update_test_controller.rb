@@ -144,8 +144,9 @@ class UpdateTestController < ApplicationController
         @all_types_object.send("#{attribute}=", value)
       end
       @all_types_object.send(params[:method])
-    when "update_attributes", "update_attributes!"
+    when "update", "update!", "update_attributes", "update_attributes!", "update_columns"
       # Update the attributes for the object with Rails basic update_attributes method.
+      params[:attributes].reject! { |k,v| v.blank? } if params[:method] == "update_columns" # Filter blank values to prevent database errors. Update_columns does not go through ActiveRecord / type casting, so the params hash needs to contain correct database values.
       @all_types_object.send(params[:method], params[:attributes])
     else
       raise "Unknown method '#{params[:method]}'"

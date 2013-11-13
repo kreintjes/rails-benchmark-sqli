@@ -38,17 +38,26 @@
     <ul>
       <li><%= link_to 'To_a', read_test_relation_objects_form_path('to_a') %></li>
       <li><%= link_to 'All', read_test_relation_objects_form_path('all') %> (deprecated)</li>
+      <li><%= link_to 'Load', read_test_relation_objects_form_path('load') %></li>
+      <li><%= link_to 'Reload', read_test_relation_objects_form_path('reload') %></li>
       <li><%= link_to 'Select', read_test_relation_objects_form_path('select') %></li>
       <li><%= link_to 'First', read_test_relation_objects_form_path('first') %></li>
       <li><%= link_to 'First!', read_test_relation_objects_form_path('first!') %></li>
       <li><%= link_to 'Last', read_test_relation_objects_form_path('last') %></li>
       <li><%= link_to 'Last!', read_test_relation_objects_form_path('last!') %></li>
+      <li><%= link_to 'Take', read_test_relation_objects_form_path('take') %></li>
+      <li><%= link_to 'Take!', read_test_relation_objects_form_path('take!') %></li>
       <li>Find:
         <%= link_to 'sub method', read_test_relation_objects_form_path('find', 'sub_method') %> (deprecated)
         <%= link_to 'single id', read_test_relation_objects_form_path('find', 'single_id') %>
         <%= link_to 'id list', read_test_relation_objects_form_path('find', 'id_list') %>
         <%= link_to 'id array', read_test_relation_objects_form_path('find', 'id_array') %>
       </li>
+      <li><%= link_to 'Find_by', read_test_relation_objects_form_path('find_by') %></li>
+      <li><%= link_to 'Find_by!', read_test_relation_objects_form_path('find_by!') %></li>
+      <li><%= link_to 'Find_or_initialize_by', read_test_relation_objects_form_path('find_or_initialize_by') %></li>
+      <li><%= link_to 'Find_or_create_by', read_test_relation_objects_form_path('find_or_create_by') %></li>
+      <li><%= link_to 'Find_or_create_by!', read_test_relation_objects_form_path('find_or_create_by!') %></li>
       <li><%= link_to 'Find_by_...', read_test_relation_objects_form_path('dynamic_find_by') %></li>
       <li><%= link_to 'Find_by_...!', read_test_relation_objects_form_path('dynamic_find_by!') %></li>
       <li><%= link_to 'Find_each', read_test_relation_objects_form_path('find_each') %></li>
@@ -61,6 +70,7 @@
   <li>Value relation methods:
     <ul>
       <li><%= link_to 'Any?', read_test_relation_value_form_path('any-') %></li>
+      <li><%= link_to 'Blank?', read_test_relation_value_form_path('blank-') %></li>
       <li><%= link_to 'Empty?', read_test_relation_value_form_path('empty-') %></li>
       <li><%= link_to 'Many?', read_test_relation_value_form_path('many-') %></li>
       <li>Exists?:
@@ -71,6 +81,7 @@
       </li>
       <li><%= link_to 'Size', read_test_relation_value_form_path('size') %></li>
       <li><%= link_to 'Explain', read_test_relation_value_form_path('explain') %></li>
+      <li><%= link_to 'Inspect', read_test_relation_value_form_path('inspect') %></li>
     </ul>
   </li>
   <li>Count relation methods:
@@ -82,6 +93,7 @@
       <li><%= link_to 'Sum', read_test_relation_value_form_path('sum') %></li>
       <li><%= link_to 'Calculate', read_test_relation_value_form_path('calculate') %></li>
       <li><%= link_to 'Pluck', read_test_relation_value_form_path('pluck') %></li>
+      <li><%= link_to 'Ids', read_test_relation_value_form_path('ids') %></li>
     </ul>
   </li>
   <li>By SQL relation methods:
@@ -138,8 +150,11 @@
   </li>
   <li>Object multiple updates:
     <ul>
+      <li>Update: <%= link_to_objects('update_test_object_multi_edit_path', 'update') %></li>
+      <li>Update!: <%= link_to_objects('update_test_object_multi_edit_path', 'update!') %></li>
       <li>Update attributes: <%= link_to_objects('update_test_object_multi_edit_path', 'update_attributes') %></li>
       <li>Update attributes!: <%= link_to_objects('update_test_object_multi_edit_path', 'update_attributes!') %></li>
+      <li>Update columns: <%= link_to_objects('update_test_object_multi_edit_path', 'update_columns') %></li>
       <li>Save: <%= link_to_objects('update_test_object_multi_edit_path', 'save') %></li>
       <li>Save!: <%= link_to_objects('update_test_object_multi_edit_path', 'save!') %></li>
     </ul>
@@ -180,6 +195,7 @@
     <ul>
       <li>Delete: <%= link_to_objects('delete_test_object_remove_path', 'delete') %></li>
       <li>Destroy: <%= link_to_objects('delete_test_object_remove_path', 'destroy') %></li>
+      <li>Destroy!: <%= link_to_objects('delete_test_object_remove_path', 'destroy!') %></li>
     </ul>
   </li>
 </ul>

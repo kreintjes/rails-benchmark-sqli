@@ -110,6 +110,10 @@ class ApplicationController < ActionController::Base
       { :type => PG::DatetimeFieldOverflow, :messages => ["ERROR:  date/time field value out of range"] },
       { :type => PG::SyntaxError, :messages => ["ERROR:  syntax error at or near \"DISTINCT\"", "DISTINCT DISTINCT"] },
       { :type => PG::AmbiguousColumn, :messages => ["ERROR:  column reference \"id\" is ambiguous"] },
+      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function avg(", ") does not exist"] },
+      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function max(", ") does not exist"] },
+      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function min(", ") does not exist"] },
+      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function sum(", ") does not exist"] },
       { :type => ActiveRecord::RecordNotFound, :messages => [] },
       { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] },
       { :type => ArgumentError, :messages => ["argument out of range"] },
@@ -142,8 +146,8 @@ class ApplicationController < ActionController::Base
     relation = relation.limit(params[:limit]) if (only.nil? || only.include?(:limit)) && params[:limit].present?
     # Add the offset option (numeric value).
     relation = relation.offset(params[:offset]) if (only.nil? || only.include?(:offset)) && params[:offset].present?
-    # Add the unique option (boolean value).
-    relation = relation.uniq(params[:uniq]) if (only.nil? || only.include?(:uniq)) && params[:uniq].present?
+    # Add the distinct (previously uniq) option (boolean value).
+    relation = relation.distinct(params[:distinct]) if (only.nil? || only.include?(:distinct)) && params[:distinct].present?
 
     # Conditions
     # Build and apply the where conditions.

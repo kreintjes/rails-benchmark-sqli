@@ -60,7 +60,7 @@ class DeleteTestController < ApplicationController
     # Find the object by its ID.
     @all_types_object = AllTypesObject.find(params[:id])
     case params[:method]
-    when "delete", "destroy"
+    when "delete", "destroy", "destroy!"
       # And destroy/delete it.
       success = @all_types_object.send(params[:method]);
     else
