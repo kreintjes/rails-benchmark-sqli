@@ -131,10 +131,10 @@ class ReadTestController < ApplicationController
       end
     when "average", "count", "maximum", "minimum", "sum", "calculate", "pluck", "ids"
       # Check if the column_name is allowed (the column_name parameter for the method pluck is considered safe by Rails and thus this parameter should be checked against a whitelist)
-      return redirect_to read_test_relation_value_form_path(params[:method], params[:option]), :alert => "Selected column_name is not a valid attribute of AllTypesObject!" if params[:colunn_name].present? && !AllTypesObject.attribute_names.include?(params[:column_name])
+      return redirect_to read_test_relation_value_form_path(params[:method], params[:option]), :alert => "Selected column_name is not a valid attribute of AllTypesObject!" if params[:column_name].present? && !AllTypesObject.attribute_names.include?(params[:column_name])
       sub_method = [params[:sub_method].to_sym] if params[:method] == "calculate" # Only calculate takes a sub_method. For other methods sub method is ignored and not used as an argument.
       column_name = [params[:column_name].presence] unless params[:method] == 'ids'
-      options = [{ :distinct => (params[:distinct] == "true") }] if params[:distinct].present? # Only count and calculate take distinct (and actually only calculate with sub_method=count used distinct)
+      options = [{ :distinct => (params[:distinct_calculate] == "true") }] if params[:distinct_calculate].present? # Only count and calculate take distinct (and actually only calculate with sub_method=count used distinct)
       @result = relation.send(params[:method], *sub_method, *column_name, *options)
     else
       raise "Unknown method '#{params[:method]}'"
@@ -201,7 +201,7 @@ class ReadTestController < ApplicationController
     relation = build_and_apply_conditions(relation, :where, params[:conditions])
 
     # The query will be automatically performed (probably using to_a) in the view to display the results.
-    @all_types_objects = relation
+    @all_types_objects = relation.to_a # Perform the query execution here, because for (strange reasons) the error format is different when they are executed from within the view
 
     respond_with(@all_types_objects)
   end
