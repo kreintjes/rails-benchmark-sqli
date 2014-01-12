@@ -113,8 +113,8 @@ class ApplicationController < ActionController::Base
       { :type => PG::AmbiguousColumn, :messages => ["ERROR:  column reference \"id\" is ambiguous"] }, # Happens when setting a value for finder option having while also setting a value for finder option eager_load or joins (it is probable expecting a different input format for having then)
       { :type => ActiveRecord::RecordNotFound, :messages => [] }, # Happens when we try to find a non-existing record (for example by using the find method with an unknown id)
       { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] }, # Happens when trying to set an association method (for example includes) with an invalid association name
+      { :type => ArgumentError, :messages => ["invalid value for Integer()"] }, # Happens when setting an invalid value for the limit finder option
       #{ :type => ArgumentError, :messages => ["argument out of range"] }, # Don't know anymore when this happens
-      #{ :type => ArgumentError, :messages => ["invalid value for Integer()"] }, # Don't know anymore when this happens
     ]
     errors.each do |error|
       if exception.is_a?(error[:type])
