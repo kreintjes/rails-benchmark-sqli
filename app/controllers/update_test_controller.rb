@@ -71,11 +71,9 @@ class UpdateTestController < ApplicationController
       # Render the value field.
       @partial = "value"
     end
-    @attributes = @all_types_object.attribute_names.reject { |a| a == "id" }
+    @attributes = AllTypesObject.column_names.reject { |a| a == "id" }
     case params[:method]
-    when "increment!"
-      @attributes = @attributes.reject { |a| ["boolean_col"].include?(a) }
-    when "decrement!"
+    when "increment!", "decrement!"
       @attributes = @attributes.reject { |a| ["binary_col", "boolean_col", "string_col", "text_col"].include?(a) }
     when "toggle!"
       @attributes = @attributes.reject { |a| ["binary_col", "float_col", "created_at", "updated_at"].include?(a) }
@@ -96,14 +94,14 @@ class UpdateTestController < ApplicationController
     when "increment!", "decrement!"
       # Increment the object's attribute :attribute by :by with Rails increment! method.
       if params[:by].blank?
-        @all_types_object.send("#{params[:method]}", params[:attribute])
+        @all_types_object.send(params[:method], params[:attribute])
       else
         begin
           # First try it with the raw data (which will be a string).
-          @all_types_object.send("#{params[:method]}", params[:attribute], params[:by])
+          @all_types_object.send(params[:method], params[:attribute], params[:by])
         rescue TypeError, NoMethodError=>e
           # This likely fails, since increment/decrement expects by to be an integer or nil. Try again with a typecast.
-          @all_types_object.send("#{params[:method]}", params[:attribute], params[:by].to_i)
+          @all_types_object.send(params[:method], params[:attribute], params[:by].to_i)
         end
       end
     when "toggle!"

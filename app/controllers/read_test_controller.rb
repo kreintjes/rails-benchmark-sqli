@@ -71,7 +71,7 @@ class ReadTestController < ApplicationController
       end
     when "dynamic_find_by", "dynamic_find_by!"
       # Check if the attribute name is allowed to prevent errors.
-      return redirect_to read_test_relation_objects_form_path(params[:method], params[:option]), :alert => "Selected attribute is not a valid attribute of AllTypesObject!" unless AllTypesObject.attribute_names.include?(params[:attribute])
+      return redirect_to read_test_relation_objects_form_path(params[:method], params[:option]), :alert => "Selected attribute is not a valid attribute of AllTypesObject!" unless AllTypesObject.column_names.include?(params[:attribute])
       method = "find_by_#{params[:attribute]}" + (params[:method] == "dynamic_find_by!" ? "!" : "")
       @results = relation.send(method, params[:value])
     when "find_each", "find_in_batches"
@@ -102,8 +102,9 @@ class ReadTestController < ApplicationController
     when "average", "count", "maximum", "minimum", "sum", "calculate", "pluck"
       # Render the column name field.
       @partial = "calculate"
-      @sub_method = true, @column_name_nil = true, @distinct = true if params[:method] == 'calculate'
-      @column_name_nil = true, @distinct = true if params[:method] == 'count'
+      @sub_method = true, @distinct = true if params[:method] == 'calculate'
+      @distinct = true if params[:method] == 'count'
+      @column_names = calculate_column_names(params[:method])
     end
   end
 
@@ -131,7 +132,7 @@ class ReadTestController < ApplicationController
       end
     when "average", "count", "maximum", "minimum", "sum", "calculate", "pluck", "ids"
       # Check if the column_name is allowed (the column_name parameter for the method pluck is considered safe by Rails and thus this parameter should be checked against a whitelist)
-      return redirect_to read_test_relation_value_form_path(params[:method], params[:option]), :alert => "Selected column_name is not a valid attribute of AllTypesObject!" if params[:column_name].present? && !AllTypesObject.attribute_names.include?(params[:column_name])
+      return redirect_to read_test_relation_value_form_path(params[:method], params[:option]), :alert => "Selected column_name is not a valid attribute of AllTypesObject!" if params[:column_name].present? && !calculate_column_names(params[:sub_method] || params[:method]).include?(params[:column_name])
       sub_method = [params[:sub_method].to_sym] if params[:method] == "calculate" # Only calculate takes a sub_method. For other methods sub method is ignored and not used as an argument.
       column_name = [params[:column_name].presence] unless params[:method] == 'ids'
       options = [{ :distinct => (params[:distinct_calculate] == "true") }] if params[:distinct_calculate].present? # Only count and calculate take distinct (and actually only calculate with sub_method=count used distinct)
@@ -224,5 +225,19 @@ private
       # Render the corresponding option field(s).
       params[:option]
     end
+  end
+
+  # Determine the valid column_names for a calculate method
+  def calculate_column_names(method)
+    column_names = AllTypesObject.column_names
+    case method
+    when 'calculate', 'count'
+      column_names = [nil] + column_names
+    when 'average', 'sum'
+      column_names = column_names.reject { |a| ['binary_col', 'boolean_col', 'date_col', 'datetime_col', 'string_col', 'text_col', 'timestamp_col', 'created_at', 'updated_at'].include?(a) }
+    when 'maximum', 'minimum'
+      column_names = column_names.reject { |a| ['binary_col', 'boolean_col'].include?(a) }
+    end
+    column_names
   end
 end

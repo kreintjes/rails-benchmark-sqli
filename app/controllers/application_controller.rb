@@ -103,21 +103,18 @@ class ApplicationController < ActionController::Base
   def safe_rescue_exception?(exception)
     # Exceptions to be safe rescued
     errors = [
-      { :type => PG::UniqueViolation, :messages => ["ERROR:  duplicate key value violates unique constraint"] },
-      { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for type"] },
-      { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for integer"] },
-      { :type => PG::InvalidDatetimeFormat, :messages => ["ERROR:  invalid input syntax for type"] },
-      { :type => PG::DatetimeFieldOverflow, :messages => ["ERROR:  date/time field value out of range"] },
-      { :type => PG::SyntaxError, :messages => ["ERROR:  syntax error at or near \"DISTINCT\"", "DISTINCT DISTINCT"] },
-      { :type => PG::AmbiguousColumn, :messages => ["ERROR:  column reference \"id\" is ambiguous"] },
-      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function avg(", ") does not exist"] },
-      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function max(", ") does not exist"] },
-      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function min(", ") does not exist"] },
-      { :type => PG::UndefinedFunction, :messages => ["ERROR:  function sum(", ") does not exist"] },
-      { :type => ActiveRecord::RecordNotFound, :messages => [] },
-      { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] },
-      { :type => ArgumentError, :messages => ["argument out of range"] },
-      { :type => ArgumentError, :messages => ["invalid value for Integer()"] },
+      { :type => PG::UniqueViolation, :messages => ["ERROR:  duplicate key value violates unique constraint"] }, # Happens when primary key (id) is overwritten with where or create_with value
+      { :type => PG::InvalidParameterValue, :messages => ["ERROR:  invalid hexadecimal digit"] }, # Happens when setting binary_col with invalid values (usually when not going through Active Record, for example with update_columns/update_column)
+      { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for type"] }, # Happens when setting columns with special types (for example booleans or decimals) with invalid values (usually when not going through Active Record, for example with update_columns/update_column)
+      { :type => PG::InvalidTextRepresentation, :messages => ["ERROR:  invalid input syntax for integer"] }, # Happens when setting integer columns with invalid values (usually when not going through Active Record, for example with update_columns/update_column)
+      { :type => PG::InvalidDatetimeFormat, :messages => ["ERROR:  invalid input syntax for type"] }, # Happens when setting datetime columns with invalid values (usually when not going through Active Record, for example with update_columns/update_column)
+      { :type => PG::DatetimeFieldOverflow, :messages => ["ERROR:  date/time field value out of range"] }, # Happens when setting datetime columns with values without range, for example the value 0 (usually when not going through Active Record, for example with update_columns/update_column)
+      { :type => PG::SyntaxError, :messages => ["ERROR:  syntax error at or near \"DISTINCT\"", "DISTINCT DISTINCT"] }, # This is necessary due to a bug in Rails finder options when setting a limit, distinct true and eager_load on has_many or has_and_belongs_to_many
+      { :type => PG::AmbiguousColumn, :messages => ["ERROR:  column reference \"id\" is ambiguous"] }, # Happens when setting a value for finder option having while also setting a value for finder option eager_load or joins (it is probable expecting a different input format for having then)
+      { :type => ActiveRecord::RecordNotFound, :messages => [] }, # Happens when we try to find a non-existing record (for example by using the find method with an unknown id)
+      { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] }, # Happens when trying to set an association method (for example includes) with an invalid association name
+      #{ :type => ArgumentError, :messages => ["argument out of range"] }, # Don't know anymore when this happens
+      #{ :type => ArgumentError, :messages => ["invalid value for Integer()"] }, # Don't know anymore when this happens
     ]
     errors.each do |error|
       if exception.is_a?(error[:type])

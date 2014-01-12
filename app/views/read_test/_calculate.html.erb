@@ -6,7 +6,7 @@
 <% end %>
 <div class="field">
   <%= label_tag(:column_name) %><br />
-  <%= select_tag(:column_name, options_for_select((@column_name_nil ? [nil] : []) + AllTypesObject.column_names)) %>
+  <%= select_tag(:column_name, options_for_select(@column_names)) %>
 </div>
 <% if @distinct %>
 <div class="field">
