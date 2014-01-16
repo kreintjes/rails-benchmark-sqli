@@ -114,7 +114,6 @@ class ApplicationController < ActionController::Base
       { :type => ActiveRecord::RecordNotFound, :messages => [] }, # Happens when we try to find a non-existing record (for example by using the find method with an unknown id)
       { :type => ActiveRecord::ConfigurationError, :messages => ["Association named", "was not found"] }, # Happens when trying to set an association method (for example includes) with an invalid association name
       { :type => ArgumentError, :messages => ["invalid value for Integer()"] }, # Happens when setting an invalid value for the limit finder option
-      #{ :type => ArgumentError, :messages => ["argument out of range"] }, # Don't know anymore when this happens
     ]
     errors.each do |error|
       if exception.is_a?(error[:type])
